@@ -1,0 +1,20 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[dev-packages]
+pytest = "==3.5.0"
+pytest-watch = "==4.1.0"
+pytest-cov = "==2.5.1"
+pylint = "==1.8.3"
+pytest-mock = "==1.7.1"
+
+[packages]
+falcon = "==1.4.1"
+gunicorn = "==19.7.1"
+marshmallow = "==2.15.0"
+pillow = "==5.1.0"
+
+[requires]
+python_version = "3.6"
