@@ -27,6 +27,11 @@ This command will also produce a coverage report.
 
 Execute `pylint app tests` to lint all code.
 
-## Starting the app
+## Starting the back end
 
-Execute `gunicorn app.app:APP --reload` to start the app for development.
+Execute `gunicorn app.app:APP --reload` to start the back end for development.
+
+## Front end
+
+The file `index.html` contains a simple front end.
+It requires a modern browser.
