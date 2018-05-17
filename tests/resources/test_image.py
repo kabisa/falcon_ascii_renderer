@@ -59,6 +59,20 @@ class TestValidation:
             }
         }
 
+    def test_rejects_request_with_non_rgb_based_image(self, client, request_with_bad_mode):
+        request = request_with_bad_mode
+        response = client.simulate_post(API_URL, body=json.dumps(request))
+
+        assert response.status == falcon.HTTP_BAD_REQUEST
+        assert response.json == {
+            "title": "Validation error",
+            "description": {
+                "image": [
+                    "Only RGB and RGBA images are supported."
+                ]
+            }
+        }
+
 
 class TestImage:
     def test_returns_ascii(self, client, valid_request, gradient_ascii):

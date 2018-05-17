@@ -1,5 +1,6 @@
 import logging
 import falcon
+import traceback
 
 
 LOGGER = logging.getLogger(__name__)
@@ -10,5 +11,8 @@ logging.basicConfig(
 
 
 def handle_base_exception(exception, *_):
+    stack_trace = traceback.format_exception(None, exception, exception.__traceback__)
     LOGGER.error("Internal server error: %s", exception)
+    for line in stack_trace:
+        LOGGER.error(line.rstrip('\n'))
     raise falcon.HTTPInternalServerError("Internal server error")

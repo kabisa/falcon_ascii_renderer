@@ -25,7 +25,7 @@ def logger_mock(mocker):
     return mocker.patch("app.errorhandlers.base_exception.LOGGER.error")
 
 
-def test_returns_json_for_internal_server_error(exception_raising_schema):
+def test_returns_json_for_internal_server_error(exception_raising_schema, logger_mock):
     response = testing.TestClient(APP).simulate_post(API_URL, body=json.dumps({}))
 
     assert response.status == falcon.HTTP_INTERNAL_SERVER_ERROR
@@ -37,4 +37,5 @@ def test_returns_json_for_internal_server_error(exception_raising_schema):
 def test_logs_cause_of_internal_server_error(exception_raising_schema, logger_mock, exception):
     testing.TestClient(APP).simulate_post(API_URL, body=json.dumps({}))
 
-    logger_mock.assert_called_once_with('Internal server error: %s', exception)
+    logger_mock.assert_any_call('Internal server error: %s', exception)
+    logger_mock.assert_any_call('Exception: %s' % exception)

@@ -10,9 +10,13 @@ class ImageField(fields.Field):
     def _deserialize(self, value, attr, data):
         try:
             image_bytes = base64.decodebytes(value.encode())
-            return Image.open(io.BytesIO(image_bytes))
+            image = Image.open(io.BytesIO(image_bytes))
         except:  # noqa: E722
-            raise ValidationError(f"Image not valid.")
+            raise ValidationError("Image not valid.")
+
+        if image.mode not in ['RGB', 'RGBA']:
+            raise ValidationError('Only RGB and RGBA images are supported.')
+        return image
 
 
 class ImageRequestSchema(Schema):
