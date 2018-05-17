@@ -1,12 +1,10 @@
-FROM alpine
+FROM frolvlad/alpine-python3
 
 RUN apk update && \
     apk upgrade && \
     apk add --no-cache \
     build-base \
     libjpeg-turbo-dev \
-    py3-pip \
-    python3 \
     python3-dev \
     zlib-dev
 
