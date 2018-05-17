@@ -1,4 +1,8 @@
 
+lint:
+	flake8
+	pylint app tests
+
 test:
 	pytest -vvvs
 
@@ -11,4 +15,4 @@ runserver:
 clean:
 	find . -type d | grep pycache | xargs rm -r
 
-.PHONY: test continuous_tests runserver clean
+.PHONY: lint test continuous_tests runserver clean

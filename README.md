@@ -19,14 +19,14 @@ It can be deactivated by executing `exit`.
 
 ## Tests
 
-Execute `pytest` to run all tests once.
-Execute `pytest-watch -- --cov=app -vv --cov-report term-missing` to continuously run all tests.
+Execute `make test` to run all tests once.
+Execute `make continuous_tests` to continuously run all tests.
 This command will also produce a coverage report.
 
 ## Linting
 
-Execute `pylint app tests` to lint all code.
+Execute `make lint` to lint all code.
 
 ## Starting the app
 
-Execute `gunicorn app.app:APP --reload` to start the app for development.
+Execute `make runserver` to start the app for development.
