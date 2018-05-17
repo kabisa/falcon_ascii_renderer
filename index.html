@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Pablo</title>
+  </head>
+  <body>
+    <h1>Pablo</h1>
+    <input id="input" type="file" accept="image/png, image/jpeg" /><br />
+    <img id="preview"  onChange="preview()"/><br />
+    <button id="generate">Convert</button>
+    <p id="output"></p>
+    <script>
+      const BASE_URL = "http://localhost:8000/api";
+
+      const OUTPUT_PARAGRAPH = document.getElementById("output");
+      const PREVIEW_IMAGE = document.getElementById("preview");
+
+      const stripPrefix = dataUrl =>
+        dataUrl.substring(dataUrl.indexOf(",") + 1);
+
+      const reportError = e =>
+        OUTPUT_PARAGRAPH.innerText = "Unexpected error: " + e;
+
+      document.getElementById("input").onchange = e => {
+        if (e.target.files.length) {
+          const reader = new FileReader();
+          reader.onload = () => {
+            PREVIEW_IMAGE.src = reader.result;
+          };
+          reader.readAsDataURL(e.target.files[0]);
+        }
+      };
+
+      document.getElementById("generate").onclick = () => {
+        if (PREVIEW_IMAGE.src) {
+          const request = {
+            image: stripPrefix(PREVIEW_IMAGE.src)
+          };
+
+          fetch(BASE_URL + "/image", {
+            body: JSON.stringify(request),
+            headers: new Headers({
+                "Content-Type": "application/json"
+            }),
+            method: "POST"
+          }).then(response => {
+            if (response.status === 200) {
+              response.json().then(text => OUTPUT_PARAGRAPH.innerText = text);
+            } else {
+              response.text().then(reportError);
+            }
+          }).catch(e => reportError(e.message));
+        }
+      };
+    </script>
+  </body>
+</html>
