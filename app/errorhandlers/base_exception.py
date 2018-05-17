@@ -1,6 +1,6 @@
 import logging
-import falcon
 import traceback
+import falcon
 
 
 LOGGER = logging.getLogger(__name__)
