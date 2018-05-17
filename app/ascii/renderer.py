@@ -11,8 +11,9 @@ def render_ascii_art(image):
     for row in range(height):
         for col in range(width):
             pixel = pixels[col, row]  # RGB
-            avg_pixel = sum(pixel) / 3.0
-            string += ASCII_CHARS[int(avg_pixel / 256.0 * NUM_ASCII_CHARS)]
+            rgb = pixel[:3]
+            avg_rgb = sum(rgb) / 3.0
+            string += ASCII_CHARS[int(avg_rgb / 256.0 * NUM_ASCII_CHARS)]
 
         string += "\n"
     return string
