@@ -1,6 +1,4 @@
-import base64
 import json
-import os
 import pytest
 import falcon
 from falcon import testing
@@ -12,23 +10,9 @@ from app.app import APP
 API_URL = '/api/image'
 
 
-def _base64_encode_file(file_name):
-    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'images')
-    file = open(f'{path}/{file_name}.png', "rb")
-    file_as_bytes = base64.b64encode(file.read())
-    return file_as_bytes.decode()
-
-
 @pytest.fixture
 def client():
     return testing.TestClient(APP)
-
-
-@pytest.fixture
-def valid_request():
-    return {
-        "image": _base64_encode_file('gradient')
-    }
 
 
 class TestValidation:
@@ -77,7 +61,6 @@ class TestValidation:
 
 
 class TestImage:
-    def test_returns_image_mode(self, client, valid_request):
+    def test_returns_ascii(self, client, valid_request, gradient_ascii):
         response = client.simulate_post(API_URL, body=json.dumps(valid_request))
-
-        assert response.json == "RGB"
+        assert response.json.encode('utf8') == gradient_ascii
