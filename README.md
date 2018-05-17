@@ -25,7 +25,8 @@ This command will also produce a coverage report.
 
 ## Linting
 
-Execute `pylint app tests` to lint all code.
+- Execute `pylint app tests` to lint all code with pylint.
+- Execute `flake8` to lint all code with Flake8.
 
 ## Starting the app
 
