@@ -1,10 +1,12 @@
-FROM ubuntu:artful
+FROM frolvlad/alpine-python3
 
-RUN apt-get update \
-  && apt-get -y install \
-    python3-pip \
-  && apt-get clean \
-  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /var/cache/apt/*
+RUN apk update && \
+    apk upgrade && \
+    apk add --no-cache \
+    build-base \
+    libjpeg-turbo-dev \
+    python3-dev \
+    zlib-dev
 
 RUN pip3 install --no-cache pipenv
 
