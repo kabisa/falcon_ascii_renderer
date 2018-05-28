@@ -12,29 +12,29 @@
     <script>
       const BASE_URL = "http://localhost:8000/api";
 
-      const OUTPUT_PARAGRAPH = document.getElementById("output");
-      const PREVIEW_IMAGE = document.getElementById("preview");
+      const outputParagraph = document.getElementById("output");
+      const previewImage = document.getElementById("preview");
 
       const stripPrefix = dataUrl =>
         dataUrl.substring(dataUrl.indexOf(",") + 1);
 
       const reportError = e =>
-        OUTPUT_PARAGRAPH.innerText = "Unexpected error: " + e;
+        outputParagraph.innerText = "Unexpected error: " + e;
 
       document.getElementById("input").onchange = e => {
         if (e.target.files.length) {
           const reader = new FileReader();
           reader.onload = () => {
-            PREVIEW_IMAGE.src = reader.result;
+            previewImage.src = reader.result;
           };
           reader.readAsDataURL(e.target.files[0]);
         }
       };
 
       document.getElementById("generate").onclick = () => {
-        if (PREVIEW_IMAGE.src) {
+        if (previewImage.src) {
           const request = {
-            image: stripPrefix(PREVIEW_IMAGE.src)
+            image: stripPrefix(previewImage.src)
           };
 
           fetch(BASE_URL + "/image", {
@@ -45,7 +45,7 @@
             method: "POST"
           }).then(response => {
             if (response.status === 200) {
-              response.json().then(text => OUTPUT_PARAGRAPH.innerText = text);
+              response.json().then(text => outputParagraph.innerText = text);
             } else {
               response.text().then(reportError);
             }
