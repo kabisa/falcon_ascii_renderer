@@ -5,7 +5,7 @@
   </head>
   <body>
     <h1>Pablo</h1>
-    <input id="input" type="file" accept="image/png, image/jpeg" /><br />
+    <input id="input" type="file" accept="image/png, image/jpeg, image/gif" /><br />
     <img id="preview" /><br />
     <button id="generate">Convert</button>
     <p id="output" style="font-family: monospace; line-height: 0.6; white-space: pre"></p>
@@ -45,7 +45,13 @@
             method: "POST"
           }).then(response => {
             if (response.status === 200) {
-              response.json().then(text => outputParagraph.innerText = text);
+              response.json().then(data => {
+                let i = 0;
+                setInterval(() => {
+                  outputParagraph.innerText = data.frames[i];
+                  i = (i + 1) % data.frames.length;
+                }, 40)
+              });
             } else {
               response.text().then(reportError);
             }
