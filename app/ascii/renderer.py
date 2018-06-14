@@ -3,9 +3,9 @@ ASCII_CHARS = "MNHQ$OC?7>!:-;. "
 NUM_ASCII_CHARS = len(ASCII_CHARS)
 
 
-def render_ascii_art(image):
-    pixels = image.load()
-    width, height = image.width, image.height
+def render_frame(frame):
+    pixels = frame.load()
+    width, height = frame.width, frame.height
 
     string = ""
     for row in range(height):
@@ -17,3 +17,12 @@ def render_ascii_art(image):
 
         string += "\n"
     return string
+
+
+def render_ascii_art(image):
+    while True:
+        try:
+            yield render_frame(image.convert("RGB"))
+            image.seek(image.tell() + 1)
+        except EOFError:
+            break

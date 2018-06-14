@@ -14,8 +14,6 @@ class ImageField(fields.Field):
         except:  # noqa: E722
             raise ValidationError("Image not valid.")
 
-        if image.mode not in ['RGB', 'RGBA']:
-            raise ValidationError('Only RGB and RGBA images are supported.')
         return image
 
 
@@ -27,5 +25,5 @@ class ImageResource:  # pylint: disable=too-few-public-methods
     def on_post(self, req, resp):  # pylint: disable=no-self-use
         schema = ImageRequestSchema(strict=True)
         request = schema.loads(req.bounded_stream.read())
-        ascii_art = render_ascii_art(request.data['image'])
-        resp.body = json.dumps(ascii_art)
+        ascii_art = render_ascii_art(request.data["image"])
+        resp.body = json.dumps({"frames": list(ascii_art)})
