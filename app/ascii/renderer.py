@@ -1,9 +1,12 @@
+from PIL import Image
 
 ASCII_CHARS = "MNHQ$OC?7>!:-;. "
 NUM_ASCII_CHARS = len(ASCII_CHARS)
 
 
 def render_frame(frame):
+    frame.thumbnail((100, 100), Image.BILINEAR)
+
     pixels = frame.load()
     width, height = frame.width, frame.height
 
@@ -26,3 +29,8 @@ def render_ascii_art(image):
             image.seek(image.tell() + 1)
         except EOFError:
             break
+
+
+def get_image_duration(image):
+    return image.info.get("duration", 1000)
+

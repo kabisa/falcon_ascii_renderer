@@ -47,10 +47,13 @@
             if (response.status === 200) {
               response.json().then(data => {
                 let i = 0;
+                const frames = data.frames;
+                const duration = data.duration;
+
                 setInterval(() => {
                   outputParagraph.innerText = data.frames[i];
                   i = (i + 1) % data.frames.length;
-                }, 40)
+                }, duration)
               });
             } else {
               response.text().then(reportError);

@@ -3,7 +3,7 @@ import io
 import json
 from marshmallow import fields, Schema, ValidationError
 from PIL import Image
-from app.ascii.renderer import render_ascii_art
+from app.ascii.renderer import get_image_duration, render_ascii_art
 
 
 class ImageField(fields.Field):
@@ -25,5 +25,8 @@ class ImageResource:  # pylint: disable=too-few-public-methods
     def on_post(self, req, resp):  # pylint: disable=no-self-use
         schema = ImageRequestSchema(strict=True)
         request = schema.loads(req.bounded_stream.read())
-        ascii_art = render_ascii_art(request.data["image"])
-        resp.body = json.dumps({"frames": list(ascii_art)})
+        image = request.data["image"]
+        ascii_art = render_ascii_art(image)
+        resp.body = json.dumps(
+            {"frames": list(ascii_art), "duration": get_image_duration(image)}
+        )
