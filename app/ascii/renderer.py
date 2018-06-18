@@ -1,11 +1,13 @@
 
+from PIL import Image
+
 ASCII_CHARS = "MNHQ$OC?7>!:-;. "
 NUM_ASCII_CHARS = len(ASCII_CHARS)
 
 
-def render_ascii_art(image):
-    pixels = image.load()
-    width, height = image.width, image.height
+def render_ascii_art(image, width, height):
+    scaled_image = image.resize((width, height), Image.BILINEAR)
+    pixels = scaled_image.load()
 
     string = ""
     for row in range(height):

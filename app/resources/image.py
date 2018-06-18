@@ -21,11 +21,16 @@ class ImageField(fields.Field):
 
 class ImageRequestSchema(Schema):
     image = ImageField(required=True)
+    width = fields.Integer(as_string=False)
+    height = fields.Integer(as_string=False)
 
 
 class ImageResource:  # pylint: disable=too-few-public-methods
     def on_post(self, req, resp):  # pylint: disable=no-self-use
         schema = ImageRequestSchema(strict=True)
         request = schema.loads(req.bounded_stream.read())
-        ascii_art = render_ascii_art(request.data['image'])
+        data = request.data
+        ascii_art = render_ascii_art(data['image'],
+                                     data['width'],
+                                     data['height'])
         resp.body = json.dumps(ascii_art)
