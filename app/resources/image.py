@@ -3,7 +3,7 @@ import io
 import json
 from marshmallow import fields, Schema, ValidationError
 from PIL import Image
-from app.ascii.renderer import render_ascii_art
+from app.ascii.renderer import get_image_duration, render_ascii_art
 
 
 class ImageField(fields.Field):
@@ -14,8 +14,6 @@ class ImageField(fields.Field):
         except:  # noqa: E722
             raise ValidationError("Image not valid.")
 
-        if image.mode not in ['RGB', 'RGBA']:
-            raise ValidationError('Only RGB and RGBA images are supported.')
         return image
 
 
@@ -33,4 +31,6 @@ class ImageResource:  # pylint: disable=too-few-public-methods
         ascii_art = render_ascii_art(data['image'],
                                      data['width'],
                                      data['height'])
-        resp.body = json.dumps(ascii_art)
+        resp.body = json.dumps(
+            {"frames": list(ascii_art), "duration": get_image_duration(data["image"])}
+        )

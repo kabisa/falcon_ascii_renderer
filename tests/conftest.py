@@ -4,19 +4,25 @@ import pytest
 
 @pytest.fixture
 def gradient_ascii():
-    with open('tests/resources/images/gradient.txt', 'rb') as file:
+    with open("tests/resources/images/gradient.txt", "rb") as file:
         return file.read()
 
 
 @pytest.fixture
 def gradient_png():
-    with open('tests/resources/images/gradient.png', 'rb') as file:
+    with open("tests/resources/images/gradient.png", "rb") as file:
         return file.read()
 
 
 @pytest.fixture
 def bird_jpg():
-    with open('tests/resources/images/bird.jpg', 'rb') as file:
+    with open("tests/resources/images/bird.jpg", "rb") as file:
+        return file.read()
+
+
+@pytest.fixture
+def animated_gif():
+    with open("tests/resources/images/montypython.gif", "rb") as file:
         return file.read()
 
 
