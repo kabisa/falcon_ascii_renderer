@@ -1,5 +1,7 @@
 # Pablo - An ASCII art generator
 
+An [earlier version of this app](https://github.com/kabisa/falcon_ascii_renderer/commit/81457f5e71791f62166b190ff0b0c6f699f6a46c) was used as a starting point for a Meetup: https://www.meetup.com/Software-Development-and-Geekery-Zuid-Nederland/events/250875080/.
+
 ## Getting Started
 
 1. Install [Python 3](https://www.python.org/).
